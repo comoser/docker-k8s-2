@@ -15,7 +15,7 @@ after_success:
   - docker build -t comoser/docker-k8s-2-worker ./worker
   - docker build -t comoser/docker-k8s-2-nginx ./nginx
   # docker hub login
-  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  - docker login -u "DOCKER_ID" -p "$DOCKER_PASSWORD"
   # docker hub push images
   - docker push comoser/docker-k8s-2-client
   - docker push comoser/docker-k8s-2-api
