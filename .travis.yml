@@ -9,7 +9,7 @@ before_install:
 script:
   - docker run -e CI=true comoser/react-test npm test
 
-after_sucess:
+after_success:
   - docker build -t comoser/docker-k8s-2-client ./client
   - docker build -t comoser/docker-k8s-2-api ./server
   - docker build -t comoser/docker-k8s-2-worker ./worker
