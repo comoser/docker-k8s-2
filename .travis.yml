@@ -1,0 +1,23 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t comoser/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true comoser/react-test npm test
+
+after_sucess:
+  - docker build -t comoser/docker-k8s-2-client ./client
+  - docker build -t comoser/docker-k8s-2-api ./server
+  - docker build -t comoser/docker-k8s-2-worker ./worker
+  - docker build -t comoser/docker-k8s-2-nginx ./nginx
+  # docker hub login
+  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  # docker hub push images
+  - docker push comoser/docker-k8s-2-client
+  - docker push comoser/docker-k8s-2-api
+  - docker push comoser/docker-k8s-2-worker
+  - docker push comoser/docker-k8s-2-nginx
