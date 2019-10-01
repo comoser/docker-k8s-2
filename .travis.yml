@@ -21,3 +21,17 @@ after_success:
   - docker push comoser/docker-k8s-2-api
   - docker push comoser/docker-k8s-2-worker
   - docker push comoser/docker-k8s-2-nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-west-2"
+  app: "docker-k8s-2"
+  env: "docker-k8s-2-env"
+  bucket_name: "elasticbeanstalk-eu-west-2-003651421893"
+  bucket_path: "docker-k8s-2"
+  on:
+    branch: "master"
+  access_key_id:
+    secure: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_ACCESS_KEY
