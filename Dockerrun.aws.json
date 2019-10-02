@@ -1,5 +1,6 @@
 {
     "AWSEBDockerrunVersion": 2,
+    "family": "1.0.0",
     "containerDefinitions": [
         {
             "name": "client",
@@ -36,7 +37,17 @@
                 "client",
                 "server"
             ],
-            "memory": 128
+            "memory": 128,
+            "dependsOn": [
+                {
+                    "containerName": "server",
+                    "condition": "COMPLETE"
+                },
+                {
+                    "containerName": "client",
+                    "condition": "COMPLETE"
+                }
+            ]
         }
     ]
 }
